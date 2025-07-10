@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModernBlog - Thoughts & Ideas</title>
+    <link rel="stylesheet" href="/static/frontend/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <h1>ModernBlog</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="#" class="nav-link active">Home</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Categories</a>
+                <a href="#" class="nav-link">Contact</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'dashboard' %}" class="logRegDas">Dashboard</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="logRegDas">Login</a>
+                {% endif %}
+
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="main">
+        <section class="hero">
+            <div class="container">
+                <h2 class="hero-title">Welcome to ModernBlog</h2>
+                <p class="hero-subtitle">Discover insights, tutorials, and thoughts on technology, design, and life.</p>
+                <div class="search-container">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search articles...">
+                    <button class="search-btn" id="searchBtn">Search</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="blog-section">
+            <div class="container">
+                <div class="section-header">
+                    <h3>Latest Articles</h3>
+                    <div class="filter-tags">
+                        <button class="tag-btn active" data-category="all">All</button>
+                        <button class="tag-btn" data-category="technology">Technology</button>
+                        <button class="tag-btn" data-category="design">Design</button>
+                        <button class="tag-btn" data-category="lifestyle">Lifestyle</button>
+                    </div>
+                </div>
+
+                <div class="blog-grid" id="blogGrid">
+                    <article class="blog-card" data-category="technology">
+                        <div class="blog-image">
+                            <img src="/placeholder.svg?height=200&width=400" alt="The Future of Web Development">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Technology</span>
+                                <span class="blog-date">Dec 15, 2024</span>
+                            </div>
+                            <h4 class="blog-title">
+                                <a href="post.html">The Future of Web Development: Trends to Watch in 2025</a>
+                            </h4>
+                            <p class="blog-excerpt">Explore the emerging technologies and frameworks that will shape web development in the coming year...</p>
+                            <div class="blog-footer">
+                                <div class="author-info">
+                                    <img src="/placeholder.svg?height=32&width=32" alt="John Doe" class="author-avatar">
+                                    <span class="author-name">John Doe</span>
+                                </div>
+                                <span class="read-time">5 min read</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="design">
+                        <div class="blog-image">
+                            <img src="/placeholder.svg?height=200&width=400" alt="Minimalist Design Principles">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Design</span>
+                                <span class="blog-date">Dec 12, 2024</span>
+                            </div>
+                            <h4 class="blog-title">
+                                <a href="post.html">Minimalist Design Principles for Modern Websites</a>
+                            </h4>
+                            <p class="blog-excerpt">Learn how to create clean, effective designs that focus on user experience and content clarity...</p>
+                            <div class="blog-footer">
+                                <div class="author-info">
+                                    <img src="/placeholder.svg?height=32&width=32" alt="Jane Smith" class="author-avatar">
+                                    <span class="author-name">Jane Smith</span>
+                                </div>
+                                <span class="read-time">7 min read</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="technology">
+                        <div class="blog-image">
+                            <img src="/placeholder.svg?height=200&width=400" alt="JavaScript Performance">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Technology</span>
+                                <span class="blog-date">Dec 10, 2024</span>
+                            </div>
+                            <h4 class="blog-title">
+                                <a href="post.html">Optimizing JavaScript Performance: Best Practices</a>
+                            </h4>
+                            <p class="blog-excerpt">Discover techniques to improve your JavaScript code performance and create faster web applications...</p>
+                            <div class="blog-footer">
+                                <div class="author-info">
+                                    <img src="/placeholder.svg?height=32&width=32" alt="Mike Johnson" class="author-avatar">
+                                    <span class="author-name">Mike Johnson</span>
+                                </div>
+                                <span class="read-time">8 min read</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="lifestyle">
+                        <div class="blog-image">
+                            <img src="/placeholder.svg?height=200&width=400" alt="Work Life Balance">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Lifestyle</span>
+                                <span class="blog-date">Dec 8, 2024</span>
+                            </div>
+                            <h4 class="blog-title">
+                                <a href="post.html">Maintaining Work-Life Balance as a Developer</a>
+                            </h4>
+                            <p class="blog-excerpt">Tips and strategies for maintaining mental health and productivity in the fast-paced tech industry...</p>
+                            <div class="blog-footer">
+                                <div class="author-info">
+                                    <img src="/placeholder.svg?height=32&width=32" alt="Sarah Wilson" class="author-avatar">
+                                    <span class="author-name">Sarah Wilson</span>
+                                </div>
+                                <span class="read-time">6 min read</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="design">
+                        <div class="blog-image">
+                            <img src="/placeholder.svg?height=200&width=400" alt="Color Theory">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Design</span>
+                                <span class="blog-date">Dec 5, 2024</span>
+                            </div>
+                            <h4 class="blog-title">
+                                <a href="post.html">Understanding Color Theory in Digital Design</a>
+                            </h4>
+                            <p class="blog-excerpt">Master the art of color selection and create visually appealing designs that resonate with your audience...</p>
+                            <div class="blog-footer">
+                                <div class="author-info">
+                                    <img src="/placeholder.svg?height=32&width=32" alt="Alex Chen" class="author-avatar">
+                                    <span class="author-name">Alex Chen</span>
+                                </div>
+                                <span class="read-time">9 min read</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="technology">
+                        <div class="blog-image">
+                            <img src="/placeholder.svg?height=200&width=400" alt="CSS Grid">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Technology</span>
+                                <span class="blog-date">Dec 3, 2024</span>
+                            </div>
+                            <h4 class="blog-title">
+                                <a href="post.html">CSS Grid vs Flexbox: When to Use Which</a>
+                            </h4>
+                            <p class="blog-excerpt">A comprehensive guide to choosing the right CSS layout method for your projects...</p>
+                            <div class="blog-footer">
+                                <div class="author-info">
+                                    <img src="/placeholder.svg?height=32&width=32" alt="Emma Davis" class="author-avatar">
+                                    <span class="author-name">Emma Davis</span>
+                                </div>
+                                <span class="read-time">4 min read</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="load-more-container">
+                    <button class="load-more-btn" id="loadMoreBtn">Load More Articles</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ModernBlog</h4>
+                    <p>Sharing insights and knowledge about technology, design, and life.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter">📱</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                        <a href="#" aria-label="GitHub">🔗</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h5>Categories</h5>
+                    <ul>
+                        <li><a href="#">Technology</a></li>
+                        <li><a href="#">Design</a></li>
+                        <li><a href="#">Lifestyle</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5>Newsletter</h5>
+                    <p>Subscribe to get the latest articles delivered to your inbox.</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Enter your email" class="newsletter-input">
+                        <button class="newsletter-btn">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ModernBlog. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/frontend/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+
+{% block styles %}
+<style>
+    .profile-container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 2rem;
+    }
+
+    .profile-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .profile-pic-container {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        margin: 0 auto 1.5rem;
+    }
+
+    .profile-pic {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #ccc;
+    }
+
+    .profile-pic-upload {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: #3b82f6;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        cursor: pointer;
+    }
+
+    .file-input {
+        display: none;
+    }
+
+    .btn-primary-custom {
+        background: #3b82f6;
+        padding: 0.6rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .btn-secondary-custom {
+        background: #ef4444;
+        padding: 0.6rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .glass-card {
+        background: var(--card-color);
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary-color);
+    }
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-col-half {
+        flex: 1 1 48%;
+        min-width: 250px;
+    }
+
+    .form-col-full {
+        flex: 1 1 100%;
+    }
+
+    .input-text,
+    .input-email,
+    .input-password,
+    .input-date,
+    .input-tel,
+    .textarea {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 0.95rem;
+    }
+
+
+</style>
+{% endblock styles %}
+
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header animate-on-scroll">
+        <h1>Profile Settings</h1>
+        <p>Manage your personal information and preferences</p>
+    </div>
+
+    <div class="profile-grid">
+        <!-- Profile Picture -->
+        <div class="glass-card animate-on-scroll full-width">
+            <div class="section-title">
+                <i class="bi bi-camera"></i> Profile Picture
+            </div>
+            <div class="text-center">
+                <form action="{% url 'profile_picture_upload' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="profile-pic-container">
+                        {% if profile.profile_picture %}
+                            <img src="{{ profile.profile_picture.url }}" class="profile-pic" id="profilePic">
+                        {% else %}
+                            <img src="{% static 'images/avatar.png' %}" class="profile-pic" id="profilePic">
+                        {% endif %}
+                        <input type="file" name="profile_picture" id="profilePicInput" class="file-input" accept="image/*" hidden>
+                        <button type="button" class="profile-pic-upload" onclick="document.getElementById('profilePicInput').click()">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                </form>
+                <div style="margin-top: 1rem;">
+                    <button class="btn-primary-custom" onclick="document.getElementById('profilePicInput').click()">
+                        <i class="bi bi-upload me-2"></i> Upload Photo
+                    </button>
+                    <form method="POST" action="{% url 'profile_picture_remove' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-secondary-custom">
+                            <i class="bi bi-trash me-2"></i> Remove
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personal Information -->
+        <div class="glass-card animate-on-scroll full-width">
+            <div class="section-title"><i class="bi bi-person"></i> Personal Information</div>
+            <form method="POST" action="{% url 'user_update' %}">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-col-half">
+                        <div class="floating-label">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" class="input-text" name="first_name" id="firstName" value="{{ user.first_name }}">
+                        </div>
+                    </div>
+                    <div class="form-col-half">
+                        <div class="floating-label">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" name="last_name" class="input-text" id="lastName" value="{{ user.last_name }}">
+                        </div>
+                    </div>
+                    <div class="form-col-full">
+                        <div class="floating-label">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" class="input-text" id="username" value="{{ user.username }}">
+                        </div>
+                    </div>
+                    <div class="form-col-full">
+                        <div class="floating-label">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" name="email" class="input-email" id="email" value="{{ user.email }}">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary-custom">
+                    <i class="bi bi-check-lg me-2"></i> Save Changes
+                </button>
+            </form>
+        </div>
+
+        <!-- Bio & Location -->
+        <div class="glass-card animate-on-scroll full-width">
+            <div class="section-title"><i class="bi bi-info-circle"></i> About & Location</div>
+            <form method="POST" action="{% url 'profile_update' %}">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-col-half">
+                        <div class="floating-label">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" name="phone" class="input-tel" id="phone" value="{{ profile.phone }}">
+                        </div>
+                    </div>
+                    <div class="form-col-half">
+                        <div class="floating-label">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" name="address" class="input-text" id="address" value="{{ profile.address }}">
+                        </div>
+                    </div>
+                    <div class="form-col-full">
+                        <div class="floating-label">
+                            <label for="bio" class="form-label">Bio</label>
+                            <textarea class="textarea" name="bio" id="bio" rows="4">{{ profile.bio }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary-custom">
+                    <i class="bi bi-check-lg me-2"></i> Update Information
+                </button>
+            </form>
+        </div>
+
+        <!-- Password Section -->
+        <div class="glass-card animate-on-scroll full-width">
+            <div class="section-title"><i class="bi bi-lock"></i> Password & Security</div>
+            <form method="POST" action="{% url 'password_change' %}">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-col-half">
+                        <div class="floating-label">
+                            <label for="oldPassword" class="form-label">Current Password</label>
+                            <input type="password" name="old_password" class="input-password" id="oldPassword">
+                        </div>
+                    </div>
+                    <div class="form-col-half">
+                        <div class="floating-label">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <input type="password" name="password1" class="input-password" id="newPassword">
+                        </div>
+                    </div>
+                    <div class="form-col-half">
+                        <div class="floating-label">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" name="password2" class="input-password" id="confirmPassword">
+                        </div>
+                        <div class="password-strength">
+                            <div id="passwordStrengthBar" class="password-strength-bar"></div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary-custom">
+                    <i class="bi bi-key me-2"></i> Change Password
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+    
+{% endblock content %}
+
+{% block script_js %}
+<script>
+    // Profile image preview and auto-submit
+    const profileInput = document.getElementById('profilePicInput');
+    const profileImage = document.getElementById('profilePic');
+
+    if (profileInput) {
+        profileInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    profileImage.src = event.target.result;
+                    setTimeout(() => {
+                        e.target.form.submit();
+                    }, 200); // delay to show preview
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+</script>
+{% endblock script_js %}
