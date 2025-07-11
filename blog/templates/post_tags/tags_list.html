@@ -1,0 +1,201 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block styles %}
+    <style>
+        .post_container{
+            max-width: 1200px;
+            margin: auto;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border-radius: 10px;
+        }
+
+        .btn_container{
+            max-width: 1200px;
+            margin: auto;
+            text-align: right;
+        }
+
+
+        .table_border_radius{
+            border-collapse: separate !important;
+            border-spacing: 0;
+            width: 100%;
+            border: solid var(--border-color) 1px;
+            border-radius: 10px;
+        }
+        .table_border_radius th, .table_border_radius td{
+            padding: 1rem;
+            color: var(--text-primary);
+            border: 1px solid var(--border-secondary);
+            text-align: left;
+        }
+
+        .table_border_radius thead{
+            background: var(--bg-secondary);
+        }
+
+        .table_border_radius tr:nth-child(even){
+            background: var(--bg-secondary);
+        }
+
+
+        .table_border_radius th:first-child{
+            border-top-left-radius: 10px;
+        }
+        .table_border_radius th:last-child{
+            border-top-right-radius: 10px;
+        }
+
+        .table_border_radius tr:last-child td:first-child{
+            border-bottom-left-radius: 10px;
+        }
+
+        .table_border_radius tr:last-child td:last-child{
+            border-bottom-right-radius: 10px;
+        }
+
+        .table_border_radius th{
+            font-weight: 600;
+        }
+
+        .btn-primary{
+            background: #2563eb;
+            padding: 15px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-primary:hover{
+            background: #3b82f6;
+        }
+
+        .edit_btn{
+            background: #f59e0b;
+            padding: 6px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .edit_btn:hover{
+            background: #d68905;
+        }
+
+
+        .delete_btn{
+            background: #ef4444;
+            padding: 6px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .delete_btn:hover{
+            background: #dd3535;
+        }
+
+        .btn-success{
+            background: #28a745;
+            padding: 6px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-success:hover{
+            background: #218838;
+        }
+
+        
+
+        .input-text {
+            max-width: 400px;
+            width: 100%;
+            min-width: 200px;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 0.95rem;
+        }
+
+        .badge{
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+        
+        
+        .bg-success{
+            background: #28a745;
+        }
+
+        .bg-danger{
+            background: #dc3545;
+        }
+
+    </style>
+{% endblock styles %}
+
+
+{% block content %}
+    <h1>Post Tag</h1>
+    <div class="btn_container">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="name" value="{{ tag.name }}" class="input-text" placeholder="Tag Name" required>
+            <button type="submit" class="btn-primary">
+                {% if tag.id %}
+                    Update Tag
+                {% else %}
+                    Add Tag
+                {% endif %}
+            </button>
+        </form>
+    </div>
+    <div class="post_container">
+        <table class="table_border_radius">
+            <thead>
+                <th>Sl No</th>
+                <th>Name</th>
+                <th>slug</th>
+                <th>Status</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                {% for tag in tags %}
+                    <tr>
+                        <td>
+                            {{ forloop.counter }}
+                        </td>
+                        <td>
+                            {{ tag.name }}
+                        </td>
+                        <td>
+                            {{ tag.slug }}
+                        </td>
+                        <td>
+                            {% if tag.active == True %}
+                                <span class="badge bg-success">Active</span>
+                            {% else %}
+                                <span class="badge bg-danger">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'tags_update' tag.id %}" class="edit_btn"><i class="fa fa-edit"></i> Edit</a>
+                            <a href="{% url 'tags_delete' tag.id %}" class="delete_btn"><i class="fa fa-trash"></i> Delete</a>
+                            {% if tag.active == True %}
+                                <a href="{% url 'tags_inactive' tag.id %}" class="delete_btn"><i class="fa fa-ban"></i> Inactive</a>
+                            {% else %}
+                                <a href="{% url 'tags_active' tag.id %}" class="btn-success"><i class="fa fa-check"></i> Active</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock content %}

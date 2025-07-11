@@ -65,7 +65,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='blog_images/', null=True, blank=True)
     is_active = models.BooleanField(default=True)
     published_at = models.DateTimeField(null=True, blank=True)
-    published_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='posts_published')
+    published_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='published_posts')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     views_count = models.IntegerField(default=0)

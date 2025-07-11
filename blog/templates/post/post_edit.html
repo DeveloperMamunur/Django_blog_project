@@ -1,0 +1,182 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block styles %}
+    <style>
+        .post_container{
+            max-width: 1000px;
+            margin: auto;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border-radius: 10px;
+        }
+
+        .btn_container{
+            max-width: 1200px;
+            margin: auto;
+            text-align: right;
+        }
+
+        .btn-primary{
+            background: #2563eb;
+            padding: 15px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-primary:hover{
+            background: #3b82f6;
+        }
+
+        .edit_btn{
+            background: #f59e0b;
+            padding: 6px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .edit_btn:hover{
+            background: #d68905;
+        }
+
+
+        .delete_btn{
+            background: #ef4444;
+            padding: 6px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .delete_btn:hover{
+            background: #dd3535;
+        }
+
+        .btn-success{
+            background: #28a745;
+            padding: 6px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-success:hover{
+            background: #218838;
+        }
+
+        
+
+        .post_form .input-text {
+            width: 100%;
+            min-width: 200px;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 0.95rem;
+        }
+
+        .badge{
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+        
+        
+        .bg-success{
+            background: #28a745;
+        }
+
+        .bg-danger{
+            background: #dc3545;
+        }
+
+
+        .post_form .floating-label{
+            display: grid;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .post_form input[type="text"],
+        .post_form input[type="file"],
+        .post_form textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 0.95rem;
+        }
+
+        .post_form select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 0.95rem;
+        }
+
+
+    </style>
+{% endblock styles %}
+
+
+{% block content %}
+    <h1>Post Update</h1>
+    <div class="btn_container">
+        <a href="{% url 'post_list' %}" class="btn-primary">
+            Back Post List
+        </a>
+    </div>
+    <div class="post_container">
+        <form method="POST" enctype="multipart/form-data" class="post_form">
+            {% csrf_token %}
+            <div class="floating-label">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="input-text" name="title" id="title" value="{{ post.title }}">
+            </div>
+            <div class="floating-label">
+                <label for="category" class="form-label">Category</label>
+                <select name="category" class="input-text" id="category">
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if category.id == post.category.id %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="floating-label">
+                <label for="tag" class="form-label">Tag</label>
+                <select name="tags" multiple>
+                    {% for tag in tags %}
+                        <option value="{{ tag.id }}" {% if tag in post.tags.all %}selected{% endif %}>{{ tag.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="floating-label">
+                <label for="meta_title" class="form-label">Meta Title</label>
+                <input type="text" name="meta_title" class="input-text" id="meta_title" value="{{ post.meta_title }}">
+            </div>
+            <div class="floating-label">
+                <label for="meta_description" class="form-label">Meta Description</label>
+                <textarea name="meta_description" id="meta_description" cols="30" rows="10">{{ post.meta_description }}</textarea>
+            </div>
+            <div class="floating-label">
+                <label for="meta_keywords" class="form-label">Meta Keywords</label>
+                <input type="text" name="meta_keywords" class="input-text" id="meta_keywords" value="{{ post.meta_keywords }}">
+            </div>
+            <div class="floating-label">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" cols="30" rows="10">{{ post.description }}</textarea>
+            </div>
+            <div class="floating-label">
+                <label for="image" class="form-label">Image</label>
+                <input type="file" name="image" class="input-text" id="image">
+                <img src="{{ post.image.url }}" class="img-fluid" width="150">
+            </div>
+            <button type="submit" class="btn-primary">
+                <i class="bi bi-check-lg me-2"></i> Update
+            </button>
+        </form>
+    </div>
+
+{% endblock content %}

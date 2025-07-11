@@ -1,0 +1,382 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block styles %}
+    <style>
+        .post_container{
+            max-width: 1200px;
+            margin: auto;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border-radius: 10px;
+        }
+
+        .btn_container{
+            max-width: 1200px;
+            margin: auto;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+
+        .table_border_radius{
+            border-collapse: separate !important;
+            border-spacing: 0;
+            width: 100%;
+            border: solid var(--border-color) 1px;
+            border-radius: 10px;
+        }
+        .table_border_radius th, .table_border_radius td{
+            padding: 1rem;
+            color: var(--text-primary);
+            border: 1px solid var(--border-secondary);
+            text-align: left;
+        }
+
+        .table_border_radius thead{
+            background: var(--bg-secondary);
+        }
+
+        .table_border_radius tr:nth-child(even){
+            background: var(--bg-secondary);
+        }
+
+
+        .table_border_radius th:first-child{
+            border-top-left-radius: 10px;
+        }
+        .table_border_radius th:last-child{
+            border-top-right-radius: 10px;
+        }
+
+        .table_border_radius tr:last-child td:first-child{
+            border-bottom-left-radius: 10px;
+        }
+
+        .table_border_radius tr:last-child td:last-child{
+            border-bottom-right-radius: 10px;
+        }
+
+        .table_border_radius th{
+            font-weight: 600;
+        }
+
+        .btn-primary{
+            background: #2563eb;
+            padding: 15px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .btn-primary:hover{
+            background: #3b82f6;
+        }
+
+        .edit_btn{
+            background: #f59e0b;
+            padding: 6px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .edit_btn:hover{
+            background: #d68905;
+        }
+
+
+        .delete_btn{
+            background: #ef4444;
+            padding: 6px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .delete_btn:hover{
+            background: #dd3535;
+        }
+
+        .btn-success{
+            background: #28a745;
+            padding: 6px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .btn-success:hover{
+            background: #218838;
+        }
+
+        
+
+        .input-text {
+            max-width: 400px;
+            width: 100%;
+            min-width: 200px;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 0.95rem;
+        }
+
+        .badge{
+            padding: 5px 10px;
+            border-radius: 10px;
+            color: white;
+            white-space: nowrap;
+        }
+        
+        
+        .bg-success{
+            background: #28a745;
+        }
+
+        .bg-danger{
+            background: #dc3545;
+        }
+
+        .bg-secondary{
+            background: #6c757d;
+        }
+
+
+    </style>
+{% endblock styles %}
+
+
+{% block content %}
+    <h1>Post List</h1>
+    <div class="btn_container">
+        <a href="{% url 'post_list' %}" class="btn-primary">
+            Back Post List
+        </a>
+    </div>
+    <div class="post_container">
+        <table class="table_border_radius">
+            <thead>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td>
+                            Title
+                        </td>
+                        <td>
+                            {{ post.title}}
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Slug
+                        </td>
+                        <td>
+                            {{ post.slug}}
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Category
+                        </td>
+                        <td>
+                            {{ post.category.name}}
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Tags
+                        </td>
+                        <td>
+                            {% for tag in post.tags.all %}
+                                <span class="badge bg-secondary">#{{ tag.name }}</span>
+                            {% endfor %}
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Author
+                        </td>
+                        <td>
+                            {{ post.author.username}}
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Meta Title
+                        </td>
+                        <td>
+                            {{ post.meta_title}}
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Meta Description
+                        </td>
+                        <td>
+                            {{ post.meta_description }}
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Meta keywords
+                        </td>
+                        <td>
+                            {{ post.meta_keywords }}
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Description
+                        </td>
+                        <td>
+                            {{ post.description }}
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Status
+                        </td>
+                        <td>
+                            {% if post.is_active == True %}
+                                <span class="badge bg-success">Active</span>
+                            {% else %}
+                                <span class="badge bg-danger">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if post.is_active == True %}
+                                <a href="{% url 'post_inactive_details' post.id %}" class="delete_btn"><i class="fa fa-ban"></i> Inactive</a>
+                            {% else %}
+                                <a href="{% url 'post_active_details' post.id %}" class="btn-success"><i class="fa fa-check"></i> Active</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Published Date
+                        </td>
+                        <td>
+                            {% if post.published_at %}
+                                <span class="badge bg-success">Published</span> at {{ post.published_at }}
+                            {% else %}
+                                <span class="badge bg-danger">Not Published</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if post.published_at %}
+                                <a href="{% url 'post_unpublished' post.id %}" class="delete_btn">
+                                    <i class="fa fa-ban"></i> Unpublish
+                                </a>
+                            {% else %}
+                                <a href="{% url 'post_published' post.id %}" class="btn-success">
+                                    <i class="fa fa-check"></i> Publish
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Published By
+                        </td>
+                        <td>
+                            {% if post.published_by %}
+                                <span class="badge bg-success">Published</span> by {{ post.published_by }}
+                            {% else %}
+                                <span class="badge bg-danger">Not Published Author</span>
+                            {% endif %}
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Create Date
+                        </td>
+                        <td>
+                            {{ post.created_at }}
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Updated Date
+                        </td>
+                        <td>
+                            {{ post.updated_at }}
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            View Count
+                        </td>
+                        <td>
+                            {{ post.views_count }}
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Like Count
+                        </td>
+                        <td>
+                            {{ post.userLikes.count }}
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Image
+                        </td>
+                        <td>
+                            <img src="{{ post.image.url }}" class="img-fluid" width="150">
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Action
+                        </td>
+                        <td>
+                            Post Delete
+                        </td>
+                        <td>
+                            <a href="{% url 'post_delete_details' post.id %}" class="delete_btn"><i class="fa fa-trash"></i> Delete</a>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock content %}

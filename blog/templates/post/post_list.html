@@ -1,0 +1,206 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block styles %}
+    <style>
+        .post_container{
+            max-width: 1200px;
+            margin: auto;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border-radius: 10px;
+        }
+
+        .btn_container{
+            max-width: 1200px;
+            margin: auto;
+            text-align: right;
+        }
+
+
+        .table_border_radius{
+            border-collapse: separate !important;
+            border-spacing: 0;
+            width: 100%;
+            border: solid var(--border-color) 1px;
+            border-radius: 10px;
+        }
+        .table_border_radius th, .table_border_radius td{
+            padding: 1rem;
+            color: var(--text-primary);
+            border: 1px solid var(--border-secondary);
+            text-align: left;
+        }
+
+        .table_border_radius thead{
+            background: var(--bg-secondary);
+        }
+
+        .table_border_radius tr:nth-child(even){
+            background: var(--bg-secondary);
+        }
+
+
+        .table_border_radius th:first-child{
+            border-top-left-radius: 10px;
+        }
+        .table_border_radius th:last-child{
+            border-top-right-radius: 10px;
+        }
+
+        .table_border_radius tr:last-child td:first-child{
+            border-bottom-left-radius: 10px;
+        }
+
+        .table_border_radius tr:last-child td:last-child{
+            border-bottom-right-radius: 10px;
+        }
+
+        .table_border_radius th{
+            font-weight: 600;
+        }
+
+        .btn-primary{
+            background: #2563eb;
+            padding: 15px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-primary:hover{
+            background: #3b82f6;
+        }
+
+        .btn-info{
+            background: #60a5fa;
+            padding: 6px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .btn-info:hover{
+            background: #3b82f6;
+        }
+
+        .edit_btn{
+            background: #f59e0b;
+            padding: 6px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .edit_btn:hover{
+            background: #d68905;
+        }
+
+
+        .delete_btn{
+            background: #ef4444;
+            padding: 6px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .delete_btn:hover{
+            background: #dd3535;
+        }
+
+        .btn-success{
+            background: #28a745;
+            padding: 6px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-success:hover{
+            background: #218838;
+        }
+
+        
+
+        .input-text {
+            max-width: 400px;
+            width: 100%;
+            min-width: 200px;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 0.95rem;
+        }
+
+        .badge{
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+        
+        
+        .bg-success{
+            background: #28a745;
+        }
+
+        .bg-danger{
+            background: #dc3545;
+        }
+
+    </style>
+{% endblock styles %}
+
+
+{% block content %}
+    <h1>Post List</h1>
+    <div class="btn_container">
+        <a href="{% url 'post_create' %}" class="btn-primary">
+            Add Post
+        </a>
+    </div>
+    <div class="post_container">
+        <table class="table_border_radius">
+            <thead>
+                <th>Sl No</th>
+                <th>Name</th>
+                <th>Author</th>
+                <th>Status</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <td>
+                            {{ forloop.counter }}
+                        </td>
+                        <td>
+                            {{ post.title }}
+                        </td>
+                        <td>
+                            {{ post.author.username}}
+                        </td>
+                        <td>
+                            {% if post.is_active == True %}
+                                <span class="badge bg-success">Active</span>
+                            {% else %}
+                                <span class="badge bg-danger">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'post_details' post.id %}" class="btn-info"><i class="fa fa-eye"></i> Detail</a>
+                            <a href="{% url 'post_update' post.id %}" class="edit_btn"><i class="fa fa-edit"></i> Edit</a>
+                            <a href="{% url 'post_delete' post.id %}" class="delete_btn"><i class="fa fa-trash"></i> Delete</a>
+                            {% if post.is_active == True %}
+                                <a href="{% url 'post_inactive' post.id %}" class="delete_btn"><i class="fa fa-ban"></i> Inactive</a>
+                            {% else %}
+                                <a href="{% url 'post_active' post.id %}" class="btn-success"><i class="fa fa-check"></i> Active</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock content %}
