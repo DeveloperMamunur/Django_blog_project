@@ -2,10 +2,53 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Category, Tag, Post
 from django.utils import timezone
+from django.utils.text import slugify
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 # Create your views here.
 def home(request):
-    return render(request, 'base.html')
+    searchQ = request.GET.get('search')
+    categoryQ = request.GET.get('category')
+    tagQ = request.GET.get('tag')
+
+   
+    posts = Post.objects.filter(published_at__isnull=False).order_by('-published_at')
+    if searchQ:
+        posts = posts.filter(
+            Q(title__icontains=searchQ) |
+            Q(description__icontains=searchQ) |
+            Q(tags__name__icontains=searchQ) |
+            Q(category__name__icontains=searchQ) |
+            Q(author__username__icontains=searchQ)
+        ).distinct()
+    if categoryQ:
+        posts = posts.filter(category__name__icontains=categoryQ)
+    if tagQ:
+        posts = posts.filter(tags__name__icontains=tagQ)
+   
+    # Pagination
+    paginator = Paginator(posts, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'page_obj': page_obj,
+        'searchQ': searchQ,
+        'categoryQ': categoryQ,
+        'tagQ': tagQ,
+        'posts': posts,
+        'categories': Category.objects.all(),
+        'tags': Tag.objects.all(),
+    }
+    return render(request, 'frontend/index.html', context)
+
+def detail_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    context = {
+        'post': post,
+    }
+    return render(request, 'frontend/post_detail.html', context)
 
 @login_required(login_url='login')
 def dashboard(request):
@@ -38,13 +81,11 @@ def category_update(request, id):
     category = get_object_or_404(Category, id=id)
     if request.method == 'POST':
         name = request.POST.get('name')
-        if not name:
+        if not name or len(name) < 3:
             return redirect('category_update', id=id)
-        if len(name) < 3:
-            return redirect('category_update', id=id)
-        if name == '':
-            return redirect('category_update', id=id)
+
         category.name = name
+        category.slug = slugify(name)  # <-- This line regenerates the slug
         category.save()
         return redirect('category_list')
     context = {
@@ -102,13 +143,10 @@ def tags_update(request, id):
     tag = get_object_or_404(Tag, id=id)
     if request.method == 'POST':
         name = request.POST.get('name')
-        if not name:
-            return redirect('tags_update', id=id)
-        if len(name) < 3:
-            return redirect('tags_update', id=id)
-        if name == '':
+        if not name or  len(name) < 3 or name == '':
             return redirect('tags_update', id=id)
         tag.name = name
+        tag.slug = slugify(name)
         tag.save()
         return redirect('tags_list')
 
@@ -208,8 +246,7 @@ def post_update(request, id):
         meta_keywords = request.POST.get('meta_keywords')
         author = request.user
         
-        if not title or len(title) < 3 or \
-           Post.objects.exclude(id=post.id).filter(title=title).exists():
+        if not title or len(title) < 3:
             return redirect('post_update', id=id)
 
         category = Category.objects.get(id=category_id)
@@ -220,6 +257,7 @@ def post_update(request, id):
             post.image = image
 
         post.title = title
+        post.slug = slugify(title)
         post.description = description
         post.category = category
         post.meta_title = meta_title
