@@ -45,6 +45,10 @@ def home(request):
 
 def detail_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
+
+    post.views_count += 1
+    post.save(update_fields=['views_count'])
+
     context = {
         'post': post,
     }
@@ -302,8 +306,6 @@ def post_active(request, id):
 @login_required(login_url='login')
 def post_details(request, id):
     post = get_object_or_404(Post, id=id)
-    post.views_count += 1
-    post.save(update_fields=['views_count'])
     context = {
         'post': post,
     }
