@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.http import JsonResponse
 
 # Create your views here.
 def home(request):
@@ -362,4 +363,20 @@ def post_comment(request, slug):
         Comment.objects.create(post=post, user=request.user, comment=comment)
     return redirect('detail_post', slug=slug)
 
+@login_required(login_url='login')
+def like_post(request):
+    post_id = request.POST.get('post_id')
+    post = Post.objects.get(id=post_id)
+
+    if request.user in post.userLikes.all():
+        post.userLikes.remove(request.user)
+        liked = False
+    else:
+        post.userLikes.add(request.user)
+        liked = True
+
+    return JsonResponse({
+        'liked': liked,
+        'total_likes': post.total_likes()
+    })
 

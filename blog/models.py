@@ -79,6 +79,9 @@ class Post(models.Model):
     def is_published(self):
         return self.published_at is not None
 
+    def total_likes(self):
+        return self.userLikes.count()
+
     def save(self, *args, **kwargs):
         if not self.slug:
             base_slug = slugify(self.title)
