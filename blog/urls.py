@@ -31,4 +31,6 @@ urlpatterns = [
     path('backend/post/details/delete/<int:id>/', views.post_delete_details, name='post_delete_details'),
     path('backend/post/published/<int:id>/', views.post_published, name='post_published'),
     path('backend/post/unpublished/<int:id>/', views.post_unpublished, name='post_unpublished'),
+    # comments urls
+    path('detail-post/comment/<str:slug>/', views.post_comment, name='post_comment'),
 ]

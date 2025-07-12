@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Category, Tag, Post
+from .models import Category, Tag, Post, Comment
 from django.utils import timezone
 from django.utils.text import slugify
 from django.core.paginator import Paginator
@@ -45,12 +45,15 @@ def home(request):
 
 def detail_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
+    comments = Comment.objects.filter(post=post)
+
 
     post.views_count += 1
     post.save(update_fields=['views_count'])
 
     context = {
         'post': post,
+        'comments': comments
     }
     return render(request, 'frontend/post_detail.html', context)
 
@@ -348,3 +351,15 @@ def post_unpublished(request, id):
     post.published_by = None
     post.save()
     return redirect('post_details', id=id)
+
+@login_required(login_url='login')
+def post_comment(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if request.method == 'POST':
+        comment = request.POST.get('comment')
+        if not comment:
+            return redirect('detail_post', slug=slug)
+        Comment.objects.create(post=post, user=request.user, comment=comment)
+    return redirect('detail_post', slug=slug)
+
+
