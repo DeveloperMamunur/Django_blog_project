@@ -5,6 +5,28 @@ from django.urls import reverse
 from ckeditor.fields import RichTextField
 
 # Create your models here.
+class MenuList(models.Model):
+    module_name        = models.CharField(max_length=100, db_index=True)
+    menu_name          = models.CharField(max_length=100, unique=True, db_index=True)
+    menu_url           = models.CharField(max_length=250, unique=True)
+    menu_icon          = models.CharField(max_length=250, blank=True, null=True)
+    parent_id          = models.IntegerField()
+    is_main_menu       = models.BooleanField(default=False)
+    is_sub_menu        = models.BooleanField(default=False)
+    is_sub_child_menu  = models.BooleanField(default=False)
+    created_at         = models.DateTimeField(auto_now_add=True)
+    updated_at         = models.DateTimeField(blank=True, null=True)
+    deleted_at         = models.DateTimeField(blank=True, null=True)
+    created_by         = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_active          = models.BooleanField(default=True)
+    deleted            = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = "menu_list"
+
+    def __str__(self) -> str:
+        return self.menu_name
+
 class Category(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)

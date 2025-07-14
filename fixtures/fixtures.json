@@ -1,0 +1,451 @@
+[
+    {
+        "model": "blog.menulist", 
+        "pk": 1,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Category List",
+            "menu_url": "/backend/category",
+            "menu_icon": "fa-solid fa-layer-group",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 2,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Category update",
+            "menu_url": "/backend/category/update/<int:id>",
+            "menu_icon": "fa-solid fa-layer-group",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z", 
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 3,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Category Delete",
+            "menu_url": "/backend/category_delete/<int:id>",
+            "menu_icon": "fa-solid fa-layer-group",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 4,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Category Inactive",
+            "menu_url": "/backend/category/category_inactive/<int:id>",
+            "menu_icon": "fa-solid fa-layer-group",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 5,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Category Active",
+            "menu_url": "/backend/category/category_active/<int:id>",
+            "menu_icon": "fa-solid fa-layer-group",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 6,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Tag List",
+            "menu_url": "/backend/tags",
+            "menu_icon": "fa fa-tags",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 7,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Tag Update",
+            "menu_url": "/backend/tags/update/<int:id>",
+            "menu_icon": "fa fa-tags",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 8,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Tag delete",
+            "menu_url": "/backend/tags_delete/<int:id>",
+            "menu_icon": "fa fa-tags",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 9,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Tag Active",
+            "menu_url": "/backend/tags/tags_active/<int:id>",
+            "menu_icon": "fa fa-tags",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 10,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Tag Inactive",
+            "menu_url": "/backend/tags/tags_inactive/<int:id>",
+            "menu_icon": "fa fa-tags",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 11,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Post List",
+            "menu_url": "/backend/post",
+            "menu_icon": "fa-solid fa-signs-post",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 12,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Post Create",
+            "menu_url": "/backend/post/create",
+            "menu_icon": "fa-solid fa-signs-post",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 13,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Post Update",
+            "menu_url": "/backend/post/update/<int:id>",
+            "menu_icon": "fa-solid fa-signs-post",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 14,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Post Delete",
+            "menu_url": "/backend/post_delete/<int:id>",
+            "menu_icon": "fa-solid fa-signs-post",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 15,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Post Inactive",
+            "menu_url": "/backend/post/post_inactive/<int:id>",
+            "menu_icon": "fa-solid fa-signs-post",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 16,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Post Active",
+            "menu_url": "/backend/post/post_active/<int:id>",
+            "menu_icon": "fa-solid fa-signs-post",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 17,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Post Details",
+            "menu_url": "/backend/post/details/<int:id>",
+            "menu_icon": "fa-solid fa-signs-post",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 18,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Post Details Active",
+            "menu_url": "/backend/post/details/active/<int:id>",
+            "menu_icon": "fa-solid fa-signs-post",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 19,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Post Details Inactive",
+            "menu_url": "/backend/post/details/inactive/<int:id>",
+            "menu_icon": "fa-solid fa-signs-post",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 20,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Post Details Delete",
+            "menu_url": "/backend/post/details/delete/<int:id>",
+            "menu_icon": "fa-solid fa-signs-post",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 21,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Post Published",
+            "menu_url": "/backend/post/published/<int:id>",
+            "menu_icon": "fa-solid fa-signs-post",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    },
+    {
+        "model": "blog.menulist", 
+        "pk": 22,
+        "fields": {
+            "module_name": "Blog",
+            "menu_name": "Blog Post Unpublished",
+            "menu_url": "/backend/post/unpublished/<int:id>",
+            "menu_icon": "fa-solid fa-signs-post",
+            "parent_id": 0,
+            "is_main_menu": true,
+            "is_sub_menu": false,
+            "is_sub_child_menu": false,
+            "created_at": "2023-02-19T15:01:14.353Z",
+            "updated_at": null,
+            "deleted_at": null,
+            "created_by": 1,
+            "is_active": true,
+            "deleted": false
+        }
+    }
+
+
+    
+
+
+
+
+
+
+]
