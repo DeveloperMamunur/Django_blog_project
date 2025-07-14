@@ -6,6 +6,7 @@ from django.utils.text import slugify
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import JsonResponse
+from core.permissions import checkUserPermission
 
 # Create your views here.
 def home(request):
@@ -65,8 +66,12 @@ def dashboard(request):
 # blog category views
 @login_required(login_url='login')
 def category_list(request):
+    if  not checkUserPermission(request, 'can_view', '/backend/category'):
+        return render(request, '403.html')
     categories = Category.objects.all()
     if request.method == 'POST':
+        if not checkUserPermission(request, 'can_add', '/backend/category'):
+            return render(request, '403.html')
         name = request.POST.get('name')
         if not name:
             return redirect('category_list')
@@ -86,6 +91,8 @@ def category_list(request):
 
 @login_required(login_url='login')
 def category_update(request, id):
+    if  not checkUserPermission(request, 'can_edit', '/backend/category/update/{id}'):
+        return render(request, '403.html')
     category = get_object_or_404(Category, id=id)
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -103,6 +110,8 @@ def category_update(request, id):
 
 @login_required(login_url='login')
 def category_delete(request, id):
+    if  not checkUserPermission(request, 'can_delete', '/backend/category_delete/{id}'):
+        return render(request, '403.html')
     category = get_object_or_404(Category, id=id)
     category.delete()
     return redirect('category_list')
@@ -110,6 +119,8 @@ def category_delete(request, id):
 
 @login_required(login_url='login')
 def category_inactive(request, id):
+    if  not checkUserPermission(request, 'can_edit', '/backend/category/category_inactive/{id}'):
+        return render(request, '403.html')
     category = get_object_or_404(Category, id=id)
     category.active = False
     category.save()
@@ -117,6 +128,8 @@ def category_inactive(request, id):
 
 @login_required(login_url='login')
 def category_active(request, id):
+    if  not checkUserPermission(request, 'can_edit', '/backend/category/category_active/{id}'):
+        return render(request, '403.html')
     category = get_object_or_404(Category, id=id)
     category.active = True
     category.save()
@@ -125,8 +138,12 @@ def category_active(request, id):
 # blog tags views
 @login_required(login_url='login')
 def tags_list(request):
+    if  not checkUserPermission(request, 'can_view', '/backend/tags'):
+        return render(request, '403.html')
     tags = Tag.objects.all()
     if request.method == 'POST':
+        if not checkUserPermission(request, 'can_add', '/backend/tags'):
+            return render(request, '403.html')
         name = request.POST.get('name')
         if not name:
             return redirect('tags_list')
@@ -148,6 +165,8 @@ def tags_list(request):
 
 @login_required(login_url='login')
 def tags_update(request, id):
+    if  not checkUserPermission(request, 'can_edit', '/backend/tags/update/{id}'):
+        return render(request, '403.html')
     tag = get_object_or_404(Tag, id=id)
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -166,12 +185,16 @@ def tags_update(request, id):
 
 @login_required(login_url='login')
 def tags_delete(request, id):
+    if  not checkUserPermission(request, 'can_delete', '/backend/tags_delete/{id}'):
+        return render(request, '403.html')
     tag = get_object_or_404(Tag, id=id)
     tag.delete()
     return redirect('tags_list')
 
 @login_required(login_url='login')
 def tags_inactive(request, id):
+    if  not checkUserPermission(request, 'can_edit', '/backend/tags/tags_inactive/{id}'):
+        return render(request, '403.html')
     tag = get_object_or_404(Tag, id=id)
     tag.active = False
     tag.save()
@@ -179,6 +202,8 @@ def tags_inactive(request, id):
 
 @login_required(login_url='login')
 def tags_active(request, id):
+    if  not checkUserPermission(request, 'can_edit', '/backend/tags/tags_active/{id}'):
+        return render(request, '403.html')
     tag = get_object_or_404(Tag, id=id)
     tag.active = True
     tag.save()
@@ -187,6 +212,8 @@ def tags_active(request, id):
 # blog post views
 @login_required(login_url='login')
 def post_list(request):
+    if  not checkUserPermission(request, 'can_view', '/backend/post'):
+        return render(request, '403.html')
     posts = Post.objects.all()
     context = {
         'posts': posts
@@ -195,6 +222,8 @@ def post_list(request):
  
 @login_required(login_url='login')
 def post_create(request):
+    if  not checkUserPermission(request, 'can_add', '/backend/post/create'):
+        return render(request, '403.html')
     if request.method == 'POST':
         title = request.POST.get('title')
         description = request.POST.get('description')
@@ -242,6 +271,8 @@ def post_create(request):
 
 @login_required(login_url='login')
 def post_update(request, id):
+    if  not checkUserPermission(request, 'can_edit', '/backend/post/update/{id}'):
+        return render(request, '403.html')
     post = get_object_or_404(Post, id=id)
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -289,12 +320,16 @@ def post_update(request, id):
 
 @login_required(login_url='login')
 def post_delete(request, id):
+    if  not checkUserPermission(request, 'can_delete', '/backend/post/delete/{id}'):
+        return render(request, '403.html')
     post = get_object_or_404(Post, id=id)
     post.delete()
     return redirect('post_list')
 
 @login_required(login_url='login')
 def post_inactive(request, id):
+    if  not checkUserPermission(request, 'can_edit', '/backend/post/post_inactive/{id}'):
+        return render(request, '403.html')
     post = get_object_or_404(Post, id=id)
     post.is_active = False
     post.save()
@@ -302,6 +337,8 @@ def post_inactive(request, id):
 
 @login_required(login_url='login')
 def post_active(request, id):
+    if  not checkUserPermission(request, 'can_edit', '/backend/post/post_active/{id}'):
+        return render(request, '403.html')
     post = get_object_or_404(Post, id=id)
     post.is_active = True
     post.save()
@@ -309,6 +346,8 @@ def post_active(request, id):
 
 @login_required(login_url='login')
 def post_details(request, id):
+    if  not checkUserPermission(request, 'can_view', '/backend/post/details/{id}'):
+        return render(request, '403.html')
     post = get_object_or_404(Post, id=id)
     context = {
         'post': post,
@@ -317,6 +356,8 @@ def post_details(request, id):
 
 @login_required(login_url='login')
 def post_active_details(request, id):
+    if  not checkUserPermission(request, 'can_edit', '/backend/post/details/active/{id}'):
+        return render(request, '403.html')
     post = get_object_or_404(Post, id=id)
     post.is_active = True
     post.save()
@@ -324,6 +365,8 @@ def post_active_details(request, id):
 
 @login_required(login_url='login')
 def post_inactive_details(request, id):
+    if  not checkUserPermission(request, 'can_edit', '/backend/post/details/inactive/{id}'):
+        return render(request, '403.html')
     post = get_object_or_404(Post, id=id)
     post.is_active = False
     post.save()
@@ -331,12 +374,16 @@ def post_inactive_details(request, id):
 
 @login_required(login_url='login')
 def post_delete_details(request, id):
+    if  not checkUserPermission(request, 'can_delete', '/backend/post/details/delete/{id}'):
+        return render(request, '403.html')
     post = get_object_or_404(Post, id=id)
     post.delete()
     return redirect('post_list')
 
 @login_required(login_url='login')
 def post_published(request, id):
+    if  not checkUserPermission(request, 'can_edit', '/backend/post/published/{id}'):
+        return render(request, '403.html')
     post = get_object_or_404(Post, id=id)
     if post.is_active == False:
         return redirect('post_details', id=id)
@@ -347,6 +394,8 @@ def post_published(request, id):
 
 @login_required(login_url='login')
 def post_unpublished(request, id):
+    if  not checkUserPermission(request, 'can_edit', '/backend/post/unpublished/{id}'):
+        return render(request, '403.html')
     post = get_object_or_404(Post, id=id)
     post.published_at = None
     post.published_by = None

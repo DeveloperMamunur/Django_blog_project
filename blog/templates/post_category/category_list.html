@@ -143,6 +143,7 @@
 {% block content %}
     <h1>Post Category</h1>
     <div class="btn_container">
+        {% if can_add_category %}
         <form method="POST">
             {% csrf_token %}
             <input type="text" name="name" value="{{ category.name }}" class="input-text" placeholder="Category Name" required>
@@ -154,6 +155,7 @@
                 {% endif %}
             </button>
         </form>
+        {% endif %}
     </div>
     <div class="post_container">
         <table class="table_border_radius">

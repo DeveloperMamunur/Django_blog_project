@@ -143,6 +143,7 @@
 {% block content %}
     <h1>Post Tag</h1>
     <div class="btn_container">
+        {% if can_add_tag %}
         <form method="POST">
             {% csrf_token %}
             <input type="text" name="name" value="{{ tag.name }}" class="input-text" placeholder="Tag Name" required>
@@ -154,6 +155,7 @@
                 {% endif %}
             </button>
         </form>
+        {% endif %}
     </div>
     <div class="post_container">
         <table class="table_border_radius">

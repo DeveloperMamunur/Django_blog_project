@@ -31,24 +31,30 @@
                             <span>Home</span>
                         </a>
                     </li>
+                    {% if can_view_categories %}
                     <li class="nav-item {% if 'category_list' in request.path %}active{% endif %}">
                         <a href="{% url 'category_list' %}" class="nav-link">
                             <i class="fa-solid fa-layer-group"></i>
                             <span>Category</span>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if can_view_tags %}
                     <li class="nav-item {% if 'tags_list' in request.path %}active{% endif %}">
                         <a href="{% url 'tags_list' %}" class="nav-link">
                             <i class="fa fa-tags"></i>
                             <span>Tags</span>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if can_view_posts %}
                     <li class="nav-item {% if 'post_list' in request.path %}active{% endif %}">
                         <a href="{% url 'post_list' %}" class="nav-link">
                             <i class="fa-solid fa-signs-post"></i>
                             <span>Posts</span>
                         </a>
                     </li>
+                    {% endif %}
                     <li class="nav-item {% if 'profile_settings' in request.path %}active{% endif %}">
                         <a href="{% url 'profile_settings' %}" class="nav-link">
                             <i class="fas fa-cog"></i>
