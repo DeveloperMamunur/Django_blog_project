@@ -72,14 +72,9 @@ def category_list(request):
     if request.method == 'POST':
         if not checkUserPermission(request, 'can_add', '/backend/category'):
             return render(request, '403.html')
-        name = request.POST.get('name')
-        if not name:
-            return redirect('category_list')
-        if Category.objects.filter(name=name).exists():
-            return redirect('category_list')
-        if len(name) < 3:
-            return redirect('category_list')
-        if name == '':
+
+        name = request.POST.get('name', '').strip()
+        if not name or len(name) < 3 or Category.objects.filter(name=name).exists():
             return redirect('category_list')
         category = Category.objects.create(name=name)
         category.save()
@@ -94,8 +89,9 @@ def category_update(request, id):
     if  not checkUserPermission(request, 'can_edit', '/backend/category/update/{id}'):
         return render(request, '403.html')
     category = get_object_or_404(Category, id=id)
+    
     if request.method == 'POST':
-        name = request.POST.get('name')
+        name = request.POST.get('name', '').strip()
         if not name or len(name) < 3:
             return redirect('category_update', id=id)
 
@@ -144,15 +140,11 @@ def tags_list(request):
     if request.method == 'POST':
         if not checkUserPermission(request, 'can_add', '/backend/tags'):
             return render(request, '403.html')
-        name = request.POST.get('name')
-        if not name:
+
+        name = request.POST.get('name', '').strip()
+        if not name or len(name) < 3 or Tag.objects.filter(name=name).exists():
             return redirect('tags_list')
-        if Tag.objects.filter(name=name).exists():
-            return redirect('tags_list')
-        if len(name) < 3:
-            return redirect('tags_list')
-        if name == '':
-            return redirect('tags_list')
+
         tag = Tag.objects.create(name=name)
         tag.save()
         return redirect('tags_list')
@@ -169,8 +161,8 @@ def tags_update(request, id):
         return render(request, '403.html')
     tag = get_object_or_404(Tag, id=id)
     if request.method == 'POST':
-        name = request.POST.get('name')
-        if not name or  len(name) < 3 or name == '':
+        name = request.POST.get('name', '').strip()
+        if not name or  len(name) < 3:
             return redirect('tags_update', id=id)
         tag.name = name
         tag.slug = slugify(name)
@@ -225,23 +217,17 @@ def post_create(request):
     if  not checkUserPermission(request, 'can_add', '/backend/post/create'):
         return render(request, '403.html')
     if request.method == 'POST':
-        title = request.POST.get('title')
+        title = request.POST.get('title', '').strip()
         description = request.POST.get('description')
         category_id = request.POST.get('category')
         tag_ids = request.POST.getlist('tags')
         image = request.FILES.get('image')
-        meta_title = request.POST.get('meta_title')
-        meta_description = request.POST.get('meta_description')
-        meta_keywords = request.POST.get('meta_keywords')
+        meta_title = request.POST.get('meta_title', '').strip()
+        meta_description = request.POST.get('meta_description', '').strip()
+        meta_keywords = request.POST.get('meta_keywords', '').strip()
         author = request.user
         
-        if Post.objects.filter(title=title).exists():
-            return redirect('post_create')
-        
-        if len(title) < 3:
-            return redirect('post_create')
-        
-        if title == '':
+        if not title or len(title) < 5 or Post.objects.filter(title=title).exists():
             return redirect('post_create')
 
         category = Category.objects.get(id=category_id)
@@ -275,14 +261,14 @@ def post_update(request, id):
         return render(request, '403.html')
     post = get_object_or_404(Post, id=id)
     if request.method == 'POST':
-        title = request.POST.get('title')
+        title = request.POST.get('title', '').strip()
         description = request.POST.get('description')
         category_id = request.POST.get('category')
         tag_ids = request.POST.getlist('tags')
         image = request.FILES.get('image')
-        meta_title = request.POST.get('meta_title')
-        meta_description = request.POST.get('meta_description')
-        meta_keywords = request.POST.get('meta_keywords')
+        meta_title = request.POST.get('meta_title', '').strip()
+        meta_description = request.POST.get('meta_description', '').strip()
+        meta_keywords = request.POST.get('meta_keywords', '').strip()
         author = request.user
         
         if not title or len(title) < 3:
