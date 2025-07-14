@@ -143,7 +143,7 @@
 {% block content %}
     <h1>Post Tag</h1>
     <div class="btn_container">
-        {% if can_add_tag %}
+        {% if can_add_tags %}
         <form method="POST">
             {% csrf_token %}
             <input type="text" name="name" value="{{ tag.name }}" class="input-text" placeholder="Tag Name" required>
